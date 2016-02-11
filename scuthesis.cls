@@ -28,17 +28,18 @@
 \setCJKfamilyfont{kai}{KaiTi}
 \newcommand{\song}{\CJKfamily{song}}    % 宋体
 \def\songti{\song}
-\newcommand{\zhsong}{\CJKfamily{zhsong}}    % 宋体
-% \def\zsong{\zhsong}
+\newcommand{\zhsong}{\CJKfamily{zhsong}}    % 华文中宋
 \newcommand{\fs}{\CJKfamily{fs}}        % 仿宋体
 \def\fangsong{\fs}
 \newcommand{\kai}{\CJKfamily{kai}}      % 楷体
 \def\kaishu{\kai}
 \newcommand{\hei}{\CJKfamily{hei}}      % 黑体
 \def\heiti{\hei}
+
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Menlo}
+\def\scuthesis{\fontspec[SmallCapsFont=Minion Pro,SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}\textsc{ScuThesis}}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -46,7 +47,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
 % 参考文献
-\RequirePackage[numbers,super,sort&compress]{natbib}
+\RequirePackage[square,numbers,super,sort&compress]{natbib}
 % 书签
 \RequirePackage{xcolor}
 \RequirePackage{hyperref}
@@ -79,16 +80,25 @@
 										 {2.3ex \@plus.2ex}%
 										 {\normalfont\normalsize\CJKfamily{hei}}}
 
-%setupcounter
+% setupcounter
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
-%setup chapter format
+% setup chapter format
 \CTEXsetup[beforeskip={-15pt}]{chapter}
 \CTEXsetup[afterskip={10pt}]{chapter}
 \CTEXsetup[name={,}]{chapter}
 \CTEXsetup[number={\arabic{chapter}}]{chapter}
 \CTEXsetup[nameformat={\zihao{3} \bfseries \heiti}]{chapter}
 \CTEXsetup[titleformat={\zihao{3} \bfseries \heiti}]{chapter}
+% setup appendix format
+\let\scu@appendix\appendix
+\renewenvironment{appendix}{
+  \scu@appendix
+  \CTEXsetup[number=\Alph{chapter}]{appendix}
+	\renewcommand\theequation{\Alph{section}.\arabic{equation}}
+	\CTEXsetup[nameformat={\zihao{3} \bfseries \heiti \raggedright}]{chapter}}{}
+% setup acknoledge format
+\newenvironment{ack}{\chapter*{\raggedright\scu@acknowledgement@pre}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
 % 封面
 \def\scu@define@term#1{
@@ -182,9 +192,6 @@
 	{\bf\zihao{5}[Abstract]} \hskip.4cm \zihao{5} \scu@eabstract \vskip1cm
 	{\bf\zihao{5}[Key Words]} \hskip.4cm \zihao{5} \scu@eabstract@key}
 
-\newenvironment{ack}{\chapter*{\scu@acknowledgement@pre}}{\clearpage}
-
-
 \RequirePackage[a4paper,%
 top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,%
 headsep=0.5cm,footskip=0.9cm,%
@@ -192,7 +199,8 @@ headsep=0.5cm,footskip=0.9cm,%
 % includehead, includefoot
 ]%
 {geometry}
-
+\usepackage{setspace}
+\linespread{1.4} %经验值
 
 %% 页眉页脚
 \fancypagestyle{plain}{%
