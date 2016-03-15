@@ -3,13 +3,14 @@
 % 基于ctexrep模版，增加专有内容
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexrep}}
 \ProcessOptions\relax
-\LoadClass[12pt,a4paper]{ctexrep}
+\LoadClass[cs4size,a4paper]{ctexrep}
 
 \RequirePackage{ifthen,calc}
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{txfonts}
 \RequirePackage{graphicx}
-\RequirePackage[config]{subfig}
+% \RequirePackage[config]{subfig}
+\RequirePackage{subfigure}
 \RequirePackage{fancyhdr}
 % 中文
 \RequirePackage{indentfirst}
@@ -46,6 +47,7 @@
 \RequirePackage{longtable}
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
+\RequirePackage{tabularx}
 % 参考文献
 \RequirePackage[square,numbers,super,sort&compress]{natbib}
 % 书签
@@ -70,15 +72,15 @@
 \renewcommand\section{\@startsection{section}{1}{\z@}%
 										 {-3.5ex \@plus -1ex \@minus -.2ex}%
 										 {2.3ex \@plus.2ex}%
-										 {\normalfont\normalsize\CJKfamily{hei}}}
+										 {\zihao{4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
 										 {-3.5ex \@plus -1ex \@minus -.2ex}%
 										 {2.3ex \@plus.2ex}%
-										 {\normalfont\normalsize\CJKfamily{hei}}}
+										 {\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
 										 {-3.5ex \@plus -1ex \@minus -.2ex}%
 										 {2.3ex \@plus.2ex}%
-										 {\normalfont\normalsize\CJKfamily{hei}}}
+										 {\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
 
 % setupcounter
 \setcounter{tocdepth}{3}
@@ -88,8 +90,8 @@
 \CTEXsetup[afterskip={10pt}]{chapter}
 \CTEXsetup[name={,}]{chapter}
 \CTEXsetup[number={\arabic{chapter}}]{chapter}
-\CTEXsetup[nameformat={\zihao{3} \bfseries \heiti}]{chapter}
-\CTEXsetup[titleformat={\zihao{3} \bfseries \heiti}]{chapter}
+\CTEXsetup[nameformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\CJKfamily{song}}]{chapter}
+\CTEXsetup[titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\CJKfamily{song}}]{chapter}
 % setup appendix format
 \let\scu@appendix\appendix
 \renewenvironment{appendix}{
@@ -179,8 +181,8 @@
 	\end{center}\par\vskip1.1cm
 	{\addtolength\leftskip{1.7cm}
 	\addtolength\rightskip{.9cm}
-	{\bf\kai\zihao{5}[摘要]} \hskip.4cm \kai\zihao{5} \scu@cabstract \vskip1.3cm
-	{\bf\kai\zihao{5}[主题词]} \hskip.3cm \kai\zihao{5} \scu@cabstract@key
+	{\bf\kai\zihao{5}\texttt{[}摘要\texttt{]}}\hskip.2cm\kai\zihao{5} \scu@cabstract \vskip1.3cm
+	{\bf\kai\zihao{5}\texttt{[}主题词\texttt{]}}\hskip.2cm\kai\zihao{5} \scu@cabstract@key
 	\clearpage}
 	% English Abstract
 	\begin{center}
@@ -189,18 +191,19 @@
 	{\sf\zihao{4} \scu@emajor@value}\par\vskip.8cm
 	{\sf\zihao{4} \scu@ename@pre : \scu@ename@value \hskip1cm \scu@esupervisor@pre : \scu@esupervisor@value}\par
 	\end{center}\par\vskip1.1cm
-	{\bf\zihao{5}[Abstract]} \hskip.4cm \zihao{5} \scu@eabstract \vskip1cm
-	{\bf\zihao{5}[Key Words]} \hskip.4cm \zihao{5} \scu@eabstract@key}
+	{\bf\zihao{5}[Abstract]}\hskip.2cm\zihao{5} \scu@eabstract \vskip1cm
+	{\bf\zihao{5}[Key Words]}\hskip.2cm\zihao{5} \scu@eabstract@key}
 
-\RequirePackage[a4paper,%
-top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,%
-headsep=0.5cm,footskip=0.9cm,%
-% footnotesep=10.8pt plus 1fil minus 2.0pt,%
-% includehead, includefoot
-]%
-{geometry}
+\RequirePackage[a4paper,
+top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,
+headsep=0.5cm,footskip=0.9cm,
+]{geometry}
 \usepackage{setspace}
-\linespread{1.4} %经验值
+\linespread{1.4} %脚注和浮动对象中标题的行距也受影响
+% \linestretch{1.4} 不影响标题的行距
+% 可用 
+% \renewcommand{\captionfont}{\linespread{1.6}\normalsize} 
+% 单独修改浮动对象的标题行距
 
 %% 页眉页脚
 \fancypagestyle{plain}{%
