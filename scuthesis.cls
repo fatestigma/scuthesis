@@ -1,9 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/01/11 v0.1 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/03/15 v0.2 scuthesis document class]
 % 基于ctexrep模版，增加专有内容
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexrep}}
 \ProcessOptions\relax
-\LoadClass[cs4size,a4paper]{ctexrep}
+% \LoadClass[cs4size,a4paper]{ctexrep}
+\LoadClass[a4paper,openany,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexrep}
 
 \RequirePackage{ifthen,calc}
 \RequirePackage{amsmath,amssymb}
@@ -15,31 +16,18 @@
 % 中文
 \RequirePackage{indentfirst}
 \RequirePackage{fontspec}
-\RequirePackage{xltxtra}
-\RequirePackage[normalindentfirst]{xeCJK}
-\punctstyle{quanjiao}
+\ctexset{%
+  punct=quanjiao,
+  space=auto,
+  autoindent=true}
 \defaultfontfeatures{Mapping=tex-text} %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
-\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]{SimSun}
-\setCJKsansfont{SimHei}
-\setCJKmonofont{KaiTi}
-\setCJKfamilyfont{song}{SimSun}
-\setCJKfamilyfont{zhsong}{STZhongsong}
-\setCJKfamilyfont{hei}{SimHei}
-\setCJKfamilyfont{fs}{FangSong}
-\setCJKfamilyfont{kai}{KaiTi}
-\newcommand{\song}{\CJKfamily{song}}    % 宋体
-\def\songti{\song}
-\newcommand{\zhsong}{\CJKfamily{zhsong}}    % 华文中宋
-\newcommand{\fs}{\CJKfamily{fs}}        % 仿宋体
-\def\fangsong{\fs}
-\newcommand{\kai}{\CJKfamily{kai}}      % 楷体
-\def\kaishu{\kai}
-\newcommand{\hei}{\CJKfamily{hei}}      % 黑体
-\def\heiti{\hei}
-
+\IfFileExists{ctex-fontset-scuthesis.def}%
+  {\ctexset{fontset=scuthesis}}%
+  {\ctexset{fontset=mac}}
+	
 \setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
+% \setsansfont{Arial}
+% \setmonofont{Menlo}
 \def\scuthesis{\fontspec[SmallCapsFont=Minion Pro,SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}\textsc{ScuThesis}}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
@@ -55,6 +43,7 @@
 \RequirePackage{hyperref}
 \hypersetup{%
 	CJKbookmarks=true,
+	linktoc=all,
   bookmarksnumbered=true,
   bookmarksopen=true,
   bookmarksopenlevel=1,
@@ -65,40 +54,66 @@
   pdfborder=0 0 0}
 \RequirePackage{hypernat}
 
-\renewcommand\chapter{\clearpage\thispagestyle{fancy}\global\@topnum\z@
-											\@afterindenttrue\secdef\@chapter\@schapter}
+\RequirePackage{geometry}
+\geometry{a4paper,
+top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,
+headsep=0.5cm,footskip=0.9cm}
 
-% \@startsection {NAME}{LEVEL}{INDENT}{BEFORESKIP}{AFTERSKIP}{STYLE}
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-										 {-3.5ex \@plus -1ex \@minus -.2ex}%
-										 {2.3ex \@plus.2ex}%
-										 {\zihao{4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-										 {-3.5ex \@plus -1ex \@minus -.2ex}%
-										 {2.3ex \@plus.2ex}%
-										 {\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-										 {-3.5ex \@plus -1ex \@minus -.2ex}%
-										 {2.3ex \@plus.2ex}%
-										 {\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\CJKfamily{song}}}
+
+% \renewcommand\chapter{\clearpage\thispagestyle{fancy}\global\@topnum\z@
+											% \@afterindenttrue\secdef\@chapter\@schapter}
 
 % setupcounter
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
-% setup chapter format
-\CTEXsetup[beforeskip={-15pt}]{chapter}
-\CTEXsetup[afterskip={10pt}]{chapter}
-\CTEXsetup[name={,}]{chapter}
-\CTEXsetup[number={\arabic{chapter}}]{chapter}
-\CTEXsetup[nameformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\CJKfamily{song}}]{chapter}
-\CTEXsetup[titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\CJKfamily{song}}]{chapter}
+
+\ctexset{%
+  chapter={
+    % afterindent=true,
+    pagestyle={fancy},
+    % beforeskip={-15pt},
+		beforeskip={1pt},
+    aftername=\hskip\ccwd,
+    afterskip={10pt},
+    name={,},
+    number=\arabic{chapter},
+		format=\raggedright,
+		nameformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
+    titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
+  },
+  section={
+    % afterindent=true,
+    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+    afterskip={2.3ex \@plus.2ex},
+    format={\zihao{4}\xeCJKsetemboldenfactor{1}\bf\songti},
+  },
+  subsection={
+    % afterindent=true,
+    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+    afterskip={2.3ex \@plus.2ex},
+    format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
+  },
+  subsubsection={
+    % afterindent=true,
+    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+    afterskip={2.3ex \@plus.2ex},
+    format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
+  },
+	appendix={
+		number=\Alph{chapter},
+	},
+  % paragraph/afterindent=true,
+  % subparagraph/afterindent=true
+}
+
 % setup appendix format
 \let\scu@appendix\appendix
 \renewenvironment{appendix}{
   \scu@appendix
-  \CTEXsetup[number=\Alph{chapter}]{appendix}
+  % \CTEXsetup[number=\Alph{chapter}]{appendix}
 	\renewcommand\theequation{\Alph{section}.\arabic{equation}}
-	\CTEXsetup[nameformat={\zihao{3} \bfseries \heiti \raggedright}]{chapter}}{}
+	\ctexset{chapter/nameformat+=\raggedright}
+}{}
 % setup acknoledge format
 \newenvironment{ack}{\chapter*{\raggedright\scu@acknowledgement@pre}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
@@ -128,8 +143,8 @@
 	{\zhsong \zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % 论文标题
 	\includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % 四川大学 校徽
 	
-  \newcolumntype{A}{>{\song}r<{}}
-  \newcolumntype{B}{>{\bf\kai}l<{}}
+  \newcolumntype{A}{>{\songti}r<{}}
+  \newcolumntype{B}{>{\bf\kaishu}l<{}}
 	\zihao{4}
 	\begin{tabular}{AB}
 		\scu@ctitle@pre & \thu@underline[8cm]\scu@ctitle@value\\[1.16cm]
@@ -144,8 +159,8 @@
 	\begin{tabular}{AB}
 		\scu@csupervisor@pre & \thu@underline[8cm]\scu@csupervisor@value\\[0.6cm]
 	\end{tabular}\par\vskip0.9cm
-	{\song\zihao{-3}\scu@jiaowuchu@title}\par\vskip-3pt
-	{\song\zihao{-3}\scu@jiaowuchu@date}
+	{\songti\zihao{-3}\scu@jiaowuchu@title}\par\vskip-3pt
+	{\songti\zihao{-3}\scu@jiaowuchu@date}
 	\end{center}
 }
 
@@ -175,14 +190,14 @@
 	\clearpage
 	\begin{center}
 	\vspace*{1.0cm}
-	{\bf\song\zihao{-2} \scu@ctitle@value}\par\vskip1.2cm
-	{\kai\zihao{4} \scu@cmajor@value}\par\vskip.75cm
-	{\kai\zihao{4} \scu@cname@pre\hskip.6cm  \scu@cname@value \hskip1cm \scu@csupervisor@pre\hskip.6cm  \scu@csupervisor@value}\par
+	{\bf\songti\zihao{-2} \scu@ctitle@value}\par\vskip1.2cm
+	{\kaishu\zihao{4} \scu@cmajor@value}\par\vskip.75cm
+	{\kaishu\zihao{4} \scu@cname@pre\hskip.6cm  \scu@cname@value \hskip1cm \scu@csupervisor@pre\hskip.6cm  \scu@csupervisor@value}\par
 	\end{center}\par\vskip1.1cm
 	{\addtolength\leftskip{1.7cm}
 	\addtolength\rightskip{.9cm}
-	{\bf\kai\zihao{5}\texttt{[}摘要\texttt{]}}\hskip.2cm\kai\zihao{5} \scu@cabstract \vskip1.3cm
-	{\bf\kai\zihao{5}\texttt{[}主题词\texttt{]}}\hskip.2cm\kai\zihao{5} \scu@cabstract@key
+	{\bf\kaishu\zihao{5}\texttt{[}摘要\texttt{]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract}\vskip1.3cm
+	{\bf\kaishu\zihao{5}\texttt{[}主题词\texttt{]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
 	\clearpage}
 	% English Abstract
 	\begin{center}
@@ -191,15 +206,12 @@
 	{\sf\zihao{4} \scu@emajor@value}\par\vskip.8cm
 	{\sf\zihao{4} \scu@ename@pre : \scu@ename@value \hskip1cm \scu@esupervisor@pre : \scu@esupervisor@value}\par
 	\end{center}\par\vskip1.1cm
-	{\bf\zihao{5}[Abstract]}\hskip.2cm\zihao{5} \scu@eabstract \vskip1cm
-	{\bf\zihao{5}[Key Words]}\hskip.2cm\zihao{5} \scu@eabstract@key}
+	{\bf\zihao{5}[Abstract]}\hskip.2cm{\zihao{5}\scu@eabstract}\vskip1cm
+	{\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}}
 
-\RequirePackage[a4paper,
-top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,
-headsep=0.5cm,footskip=0.9cm,
-]{geometry}
-\usepackage{setspace}
-\linespread{1.4} %脚注和浮动对象中标题的行距也受影响
+
+% \usepackage{setspace}
+% \linespread{1.4} %脚注和浮动对象中标题的行距也受影响
 % \linestretch{1.4} 不影响标题的行距
 % 可用 
 % \renewcommand{\captionfont}{\linespread{1.6}\normalsize} 
