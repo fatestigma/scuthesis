@@ -1,10 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{scuthesis}[2016/03/15 v0.2 scuthesis document class]
-% 基于ctexrep模版，增加专有内容
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexrep}}
+% 基于ctexbook模版，增加专有内容
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions\relax
-% \LoadClass[cs4size,a4paper]{ctexrep}
-\LoadClass[a4paper,openany,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexrep}
+\LoadClass[a4paper,openright,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}
 
 \RequirePackage{ifthen,calc}
 \RequirePackage{amsmath,amssymb}
@@ -28,7 +27,9 @@
 \setmainfont{Times New Roman}
 % \setsansfont{Arial}
 % \setmonofont{Menlo}
-\def\scuthesis{\fontspec[SmallCapsFont=Minion Pro,SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}\textsc{ScuThesis}}
+% \def\scuthesis{\fontspec[SmallCapsFont=Minion Pro,SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}\textsc{ScuThesis}}
+\def\scuthesis{\textsc{ScuThesis}}
+\def\version{0.2}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -59,8 +60,23 @@
 top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,
 headsep=0.5cm,footskip=0.9cm}
 
-
-% \renewcommand\chapter{\clearpage\thispagestyle{fancy}\global\@topnum\z@
+\let\scu@cleardoublepage\cleardoublepage
+\newcommand\scu@clearemptydoublepage{\clearpage{\thispagestyle{plain}\scu@cleardoublepage}}
+\let\cleardoublepage\scu@clearemptydoublepage
+\renewcommand\frontmatter{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \@mainmatterfalse
+  \pagenumbering{Roman}
+  \pagestyle{plain}}
+\renewcommand\mainmatter{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \@mainmattertrue
+  \pagenumbering{arabic}
+  \pagestyle{plain}}
+\renewcommand\backmatter{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \@mainmattertrue}
+% \renewcommand\chapter{\cleardoublepage\thispagestyle{fancy}\global\@topnum\z@
 											% \@afterindenttrue\secdef\@chapter\@schapter}
 
 % setupcounter
@@ -117,6 +133,11 @@ headsep=0.5cm,footskip=0.9cm}
 % setup acknoledge format
 \newenvironment{ack}{\chapter*{\raggedright\scu@acknowledgement@pre}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
+% \renewcommand\tableofcontents{\pdfbookmark[0]{目录}{tableofcontents}\tableofcontents}
+\let\scu@tableofcontents\tableofcontents
+\newcommand\scu@maketableofcontents{\clearpage\pdfbookmark[0]{目录}{tableofcontents}\scu@tableofcontents}
+\let\tableofcontents\scu@maketableofcontents
+
 % 封面
 \def\scu@define@term#1{
   \expandafter\gdef\csname #1\endcsname##1{%
@@ -137,12 +158,12 @@ headsep=0.5cm,footskip=0.9cm}
 
 \newcommand\thu@underline[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
 \newcommand\scu@cover{
+	\pdfbookmark[-1]{\scu@ctitle@value}{ctitle}
 	\begin{center}
 	\vspace*{.1cm}
 	\includegraphics[height=1.6cm]{./images/scu}\par\vskip1.35cm % 四川大学 Logo
-	{\zhsong \zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % 论文标题
+	{\zhsong\zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % 论文标题
 	\includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % 四川大学 校徽
-	
   \newcolumntype{A}{>{\songti}r<{}}
   \newcolumntype{B}{>{\bf\kaishu}l<{}}
 	\zihao{4}
@@ -162,14 +183,25 @@ headsep=0.5cm,footskip=0.9cm}
 	{\songti\zihao{-3}\scu@jiaowuchu@title}\par\vskip-3pt
 	{\songti\zihao{-3}\scu@jiaowuchu@date}
 	\end{center}
+	\clearpage
+	% \thispagestyle{empty}
+	% \phantom{s}
 }
+\def\scu@setup@pdfinfo{%
+  \hypersetup{%
+    pdftitle={\scu@ctitle@value},
+    pdfauthor={\scu@cname@value},
+    pdfsubject={\scu@bachelor@report@title},
+    pdfcreator={\scuthesis-v\version}}}
 
 \newcommand\makecover{
+	\scu@setup@pdfinfo
 	% 封面
 	\begin{titlepage}
 		\scu@cover
 	\end{titlepage}
 	% 摘要
+	\setcounter{page}{1}
 	\normalsize
 	\scu@makeabstract
 }
@@ -188,6 +220,7 @@ headsep=0.5cm,footskip=0.9cm}
 
 \newcommand\scu@makeabstract{
 	\clearpage
+	\pdfbookmark[0]{摘要}{cabstract}
 	\begin{center}
 	\vspace*{1.0cm}
 	{\bf\songti\zihao{-2} \scu@ctitle@value}\par\vskip1.2cm
@@ -196,10 +229,11 @@ headsep=0.5cm,footskip=0.9cm}
 	\end{center}\par\vskip1.1cm
 	{\addtolength\leftskip{1.7cm}
 	\addtolength\rightskip{.9cm}
-	{\bf\kaishu\zihao{5}\texttt{[}摘要\texttt{]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract}\vskip1.3cm
-	{\bf\kaishu\zihao{5}\texttt{[}主题词\texttt{]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
+	{\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}摘要{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract}\vskip1.3cm
+	{\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}主题词{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
 	\clearpage}
 	% English Abstract
+	\pdfbookmark[0]{Abstract}{eabstract}
 	\begin{center}
 	\vspace*{.75cm}
 	{\bf\zihao{-2} \scu@etitle@value}\par\vskip1.5cm
