@@ -1,23 +1,10 @@
 % !Mode:: "TeX:UTF-8"
 
 \documentclass{scuthesis}
-\usepackage{selectp}
+\input{chapters/basic}
+% \usepackage{selectp}
 % \outputonly{0,2}
-\ctitle{四川大学本科生毕业论文\LaTeX{}模板}
-\etitle{\LaTeX{} Template of Bachelor Dissertations for Sichuan University}
-\cdepartment{计算机学院}
-\edepartment{College of Computer Science}
-\cmajor{计算机科学与技术}
-\emajor{Computer Science and Technology}
-\cname{张三}
-\ename{San Zhang}
-\csupervisor{李四}
-\esupervisor{Si Li}
-\sid{1234567890123}
-\session{2020}
 \usepackage{ulem}
-\usepackage{caption}
-\renewcommand\captionfont{\songti\zihao{5}}
 
 \begin{document}
 \frontmatter
@@ -30,6 +17,10 @@
 \backmatter
 \listoffigures
 \listoftables
+% 参考文献
+% \cleardoublepage
+% \bibliographystyle{bstutf8}
+% \bibliography{ref/refs}
 % 致谢
 \include{chapters/epilogue}
 \begin{appendix}

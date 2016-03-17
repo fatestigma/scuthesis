@@ -9,8 +9,7 @@
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{txfonts}
 \RequirePackage{graphicx}
-% \RequirePackage[config]{subfig}
-\RequirePackage{subfigure}
+\RequirePackage[labelformat=simple]{subcaption}
 \RequirePackage{fancyhdr}
 % 中文
 \RequirePackage{indentfirst}
@@ -64,17 +63,15 @@ headsep=0.5cm,footskip=0.9cm}
 \newcommand\scu@clearemptydoublepage{\clearpage{\thispagestyle{plain}\scu@cleardoublepage}}
 \let\cleardoublepage\scu@clearemptydoublepage
 \renewcommand\frontmatter{%
-  \if@openright\cleardoublepage\else\clearpage\fi
+  % \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmatterfalse
-  \pagenumbering{Roman}
-  \pagestyle{plain}}
+  \pagenumbering{Roman}}
 \renewcommand\mainmatter{%
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue
-  \pagenumbering{arabic}
-  \pagestyle{plain}}
+  \pagenumbering{arabic}}
 \renewcommand\backmatter{%
-  \if@openright\cleardoublepage\else\clearpage\fi
+  % \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue}
 % \renewcommand\chapter{\cleardoublepage\thispagestyle{fancy}\global\@topnum\z@
 											% \@afterindenttrue\secdef\@chapter\@schapter}
@@ -82,6 +79,14 @@ headsep=0.5cm,footskip=0.9cm}
 % setupcounter
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
+
+\DeclareCaptionLabelFormat{scu}{{\zihao{5}\songti #1~\rmfamily #2}}
+\DeclareCaptionLabelSeparator{scu}{\hspace{1em}}
+\DeclareCaptionFont{scu}{\zihao{5}}
+\captionsetup{labelformat=scu,labelsep=scu,font=scu}
+\captionsetup[table]{position=top,belowskip={12bp-\intextsep},aboveskip=3bp}
+\captionsetup[figure]{position=bottom,belowskip={12bp-\intextsep},aboveskip=3bp}
+\captionsetup[sub]{font=thu,skip=6bp}
 
 \ctexset{%
   chapter={
@@ -243,26 +248,19 @@ headsep=0.5cm,footskip=0.9cm}
 	{\bf\zihao{5}[Abstract]}\hskip.2cm{\zihao{5}\scu@eabstract}\vskip1cm
 	{\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}}
 
-
-% \usepackage{setspace}
-% \linespread{1.4} %脚注和浮动对象中标题的行距也受影响
-% \linestretch{1.4} 不影响标题的行距
-% 可用 
-% \renewcommand{\captionfont}{\linespread{1.6}\normalsize} 
-% 单独修改浮动对象的标题行距
-
 %% 页眉页脚
+\newcommand\scu@setfoot[1]{\if@openright\fancyfoot{}\fancyfoot[RO,LE]{#1}\else\fancyfoot[C]{#1}\fi}
 \fancypagestyle{plain}{%
   \fancyhf{}% 先清除当前页面的页眉页脚定义，是fancyhdr包中的定义
   \renewcommand{\headrulewidth}{0pt}%
   \renewcommand{\footrulewidth}{0pt}%
-  \fancyfoot[C]{\zihao{-5} \thepage}
+	\scu@setfoot{\zihao{-5} \thepage}
 }
 \pagestyle{fancy}
 \fancyhead{} %clear all fields  
 \fancyhead[L]{\zihao{5} \scu@report@name}  
 \fancyhead[R]{\zihao{5} \scu@ctitle@value}
-\fancyfoot[C]{\zihao{-5} \thepage}
+\scu@setfoot{\zihao{-5} \thepage}
 
 \AtEndOfClass{\input{scuthesis.cfg}}
 %%
