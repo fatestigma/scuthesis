@@ -1,41 +1,39 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/03/15 v0.2 scuthesis document class]
-% 基于ctexbook模版，增加专有内容
+\ProvidesClass{scuthesis}[2016/03/15 v0.3 scuthesis document class]
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions\relax
-\LoadClass[a4paper,openright,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}
+\LoadClass[a4paper,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}
 
 \RequirePackage{ifthen,calc}
 \RequirePackage{amsmath,amssymb}
-\RequirePackage{txfonts}
 \RequirePackage{graphicx}
 \RequirePackage[labelformat=simple]{subcaption}
 \RequirePackage{fancyhdr}
-% 中文
 \RequirePackage{indentfirst}
 \RequirePackage{fontspec}
 \ctexset{%
   punct=quanjiao,
   space=auto,
   autoindent=true}
-\defaultfontfeatures{Mapping=tex-text} %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
-\IfFileExists{ctex-fontset-scuthesis.def}%
-  {\ctexset{fontset=scuthesis}}%
+\defaultfontfeatures{Mapping=tex-text}
+\IfFileExists{ctex-fontset-scuthesis.def}
+  {\ctexset{fontset=scuthesis}}
   {\ctexset{fontset=mac}}
-	
-\setmainfont{Times New Roman}
+
+\setmainfont[
+  Ligatures=TeX,
+  SmallCapsFont={Minion Pro},
+  SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}
 % \setsansfont{Arial}
 % \setmonofont{Menlo}
-% \def\scuthesis{\fontspec[SmallCapsFont=Minion Pro,SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}\textsc{ScuThesis}}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.2}
+\def\version{0.3}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
 \RequirePackage{longtable}
 \RequirePackage{booktabs}
-\RequirePackage{multirow}
-\RequirePackage{tabularx}
 % 参考文献
 \RequirePackage[square,numbers,super,sort&compress]{natbib}
 % 书签
@@ -56,8 +54,13 @@
 
 \RequirePackage{geometry}
 \geometry{a4paper,
-top=2.5cm,bottom=2.5cm,left=2.5cm,right=2cm,
-headsep=0.5cm,footskip=0.9cm}
+	top=2.5cm,
+	bottom=2.5cm,
+	left=2.5cm,
+	right=2cm,
+	headheight=4.5mm,
+	headsep=0.5cm,
+	footskip=0.9cm}
 
 \let\scu@cleardoublepage\cleardoublepage
 \newcommand\scu@clearemptydoublepage{\clearpage{\thispagestyle{plain}\scu@cleardoublepage}}
@@ -73,10 +76,7 @@ headsep=0.5cm,footskip=0.9cm}
 \renewcommand\backmatter{%
   % \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue}
-% \renewcommand\chapter{\cleardoublepage\thispagestyle{fancy}\global\@topnum\z@
-											% \@afterindenttrue\secdef\@chapter\@schapter}
 
-% setupcounter
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
@@ -92,8 +92,7 @@ headsep=0.5cm,footskip=0.9cm}
   chapter={
     % afterindent=true,
     pagestyle={fancy},
-    % beforeskip={-15pt},
-		beforeskip={1pt},
+    beforeskip={-15pt},
     aftername=\hskip\ccwd,
     afterskip={10pt},
     name={,},
@@ -104,19 +103,19 @@ headsep=0.5cm,footskip=0.9cm}
   },
   section={
     % afterindent=true,
-    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+		beforeskip={3.5ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{4}\xeCJKsetemboldenfactor{1}\bf\songti},
   },
   subsection={
     % afterindent=true,
-    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+		beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
   },
   subsubsection={
     % afterindent=true,
-    beforeskip={-3.5ex \@plus -1ex \@minus -.2ex},
+		beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
   },
@@ -127,7 +126,7 @@ headsep=0.5cm,footskip=0.9cm}
   % subparagraph/afterindent=true
 }
 
-% setup appendix format
+% Setup appendix format
 \let\scu@appendix\appendix
 \renewenvironment{appendix}{
   \scu@appendix
@@ -138,12 +137,11 @@ headsep=0.5cm,footskip=0.9cm}
 % setup acknoledge format
 \newenvironment{ack}{\chapter*{\raggedright\scu@acknowledgement@pre}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
-% \renewcommand\tableofcontents{\pdfbookmark[0]{目录}{tableofcontents}\tableofcontents}
 \let\scu@tableofcontents\tableofcontents
 \newcommand\scu@maketableofcontents{\clearpage\pdfbookmark[0]{目录}{tableofcontents}\scu@tableofcontents}
 \let\tableofcontents\scu@maketableofcontents
 
-% 封面
+% Cover
 \def\scu@define@term#1{
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname scu@#1@value\endcsname{##1}}
@@ -166,9 +164,9 @@ headsep=0.5cm,footskip=0.9cm}
 	\pdfbookmark[-1]{\scu@ctitle@value}{ctitle}
 	\begin{center}
 	\vspace*{.1cm}
-	\includegraphics[height=1.6cm]{./images/scu}\par\vskip1.35cm % 四川大学 Logo
-	{\zhsong\zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % 论文标题
-	\includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % 四川大学 校徽
+	\includegraphics[height=1.6cm]{./images/scu}\par\vskip1.35cm % Logo
+	{\zhsong\zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % Title
+	\includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % Badge
   \newcolumntype{A}{>{\songti}r<{}}
   \newcolumntype{B}{>{\bf\kaishu}l<{}}
 	\zihao{4}
@@ -189,8 +187,7 @@ headsep=0.5cm,footskip=0.9cm}
 	{\songti\zihao{-3}\scu@jiaowuchu@date}
 	\end{center}
 	\clearpage
-	% \thispagestyle{empty}
-	% \phantom{s}
+	% \thispagestyle{empty} \phantom{s}
 }
 \def\scu@setup@pdfinfo{%
   \hypersetup{%
@@ -201,17 +198,15 @@ headsep=0.5cm,footskip=0.9cm}
 
 \newcommand\makecover{
 	\scu@setup@pdfinfo
-	% 封面
 	\begin{titlepage}
 		\scu@cover
 	\end{titlepage}
-	% 摘要
 	\setcounter{page}{1}
 	\normalsize
 	\scu@makeabstract
 }
 
-%% 摘要
+% Abstract
 \long\@xp\def\@xp\collect@@body\@xp#\@xp1\@xp\end\@xp#\@xp2\@xp{%
   \collect@@body{#1}\end{#2}}
 \long\@xp\def\@xp\push@begins\@xp#\@xp1\@xp\begin\@xp#\@xp2\@xp{%
@@ -248,10 +243,10 @@ headsep=0.5cm,footskip=0.9cm}
 	{\bf\zihao{5}[Abstract]}\hskip.2cm{\zihao{5}\scu@eabstract}\vskip1cm
 	{\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}}
 
-%% 页眉页脚
+% Footer and Header
 \newcommand\scu@setfoot[1]{\if@openright\fancyfoot{}\fancyfoot[RO,LE]{#1}\else\fancyfoot[C]{#1}\fi}
 \fancypagestyle{plain}{%
-  \fancyhf{}% 先清除当前页面的页眉页脚定义，是fancyhdr包中的定义
+  \fancyhf{} % Clear current footer and header
   \renewcommand{\headrulewidth}{0pt}%
   \renewcommand{\footrulewidth}{0pt}%
 	\scu@setfoot{\zihao{-5} \thepage}
