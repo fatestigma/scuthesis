@@ -3,7 +3,7 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions\relax
-\LoadClass[a4paper,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}
+\LoadClass[a4paper,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}[2016/02/02]
 
 \RequirePackage{ifthen,calc}
 \RequirePackage{amsmath,amssymb}
