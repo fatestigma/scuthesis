@@ -1,8 +1,15 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{scuthesis}[2016/03/15 v0.3 scuthesis document class]
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
-\ProcessOptions\relax
+\RequirePackage{kvoptions}
+\RequirePackage{etoolbox}
+\SetupKeyvalOptions{family=scu,prefix=scu@opt@,setkeys=\kvsetkeys}
+\DeclareBoolOption[false]{chapc}
+\DeclareComplementaryOption{chapl}{chapc}
+\DeclareBoolOption[true]{abstract}
+\DeclareComplementaryOption{noabstract}{abstract}
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\ProcessKeyvalOptions*
 \LoadClass[a4paper,UTF8,zihao=-4,scheme=chinese,fontset=none,linespread=1.4]{ctexbook}[2016/02/02]
 
 \RequirePackage{ifthen,calc}
@@ -97,7 +104,6 @@
     afterskip={10pt},
     name={,},
     number=\arabic{chapter},
-		format=\raggedright,
 		nameformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
     titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
   },
@@ -125,6 +131,9 @@
   % paragraph/afterindent=true,
   % subparagraph/afterindent=true
 }
+\ifscu@opt@chapc\ctexset{chapter/format=\centering}
+\else\ctexset{chapter/format=\raggedright}\fi
+
 
 % Setup appendix format
 \let\scu@appendix\appendix
@@ -203,7 +212,9 @@
 	\end{titlepage}
 	\setcounter{page}{1}
 	\normalsize
+	\ifscu@opt@abstract
 	\scu@makeabstract
+	\fi
 }
 
 % Abstract
