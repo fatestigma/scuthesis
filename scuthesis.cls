@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/03/15 v0.3 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/03/15 v0.4 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -35,7 +35,7 @@
 % \setsansfont{Arial}
 % \setmonofont{Menlo}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.3}
+\def\version{0.4}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
