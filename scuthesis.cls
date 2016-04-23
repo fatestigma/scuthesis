@@ -1,5 +1,22 @@
+%% scuthesis.cls
+%% Copyright 2016 Xi Jin <fate.stigma@gmail.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Xi Jin.
+%
+% This work consists of the files scuthesis.cls and scuthesis.cfg.
+
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/03/15 v0.4 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/04/23 v0.5 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -35,7 +52,7 @@
 % \setsansfont{Arial}
 % \setmonofont{Menlo}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.4}
+\def\version{0.5}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
