@@ -16,7 +16,7 @@
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/04/23 v0.5 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/04/23 v0.5.1 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -52,7 +52,7 @@
 % \setsansfont{Arial}
 % \setmonofont{Menlo}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.5}
+\def\version{0.5.1}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}

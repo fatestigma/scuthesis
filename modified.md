@@ -1,4 +1,14 @@
 # ScuThesis 变更手册
+## ScuThesis v0.5.1
+本次变更文件为 `scuthesis.cls` 与 `scuthesis.cfg`：
+
+1. 添加插图、表格、参考文献目录
+2. 修改插图、表格、参考文献代码以居中标题
+3. 修改目录含插图、表格目录中 Chapter 的间距
+4. 修改 cftdot 样式
+5. 修改点之间的间距 cftdotsep
+6. 修改参考文献条目之间距离
+
 ## SchThesis.bst 0.1
 _2016-04-24_
 
