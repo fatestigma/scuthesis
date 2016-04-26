@@ -1,5 +1,7 @@
 # ScuThesis 变更手册
 ## ScuThesis v0.5.1
+_2016-04-26_
+
 本次变更文件为 `scuthesis.cls` 与 `scuthesis.cfg`：
 
 1. 添加插图、表格、参考文献目录
