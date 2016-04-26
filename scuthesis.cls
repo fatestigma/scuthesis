@@ -104,6 +104,7 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
+% Caption Style
 \DeclareCaptionLabelFormat{scu}{{\zihao{5}\songti #1~\rmfamily #2}}
 \DeclareCaptionLabelSeparator{scu}{\hspace{1em}}
 \DeclareCaptionFont{scu}{\zihao{5}}
@@ -112,9 +113,8 @@
 \captionsetup[figure]{position=bottom,belowskip={12bp-\intextsep},aboveskip=3bp}
 \captionsetup[sub]{font=thu,skip=6bp}
 
-\ctexset{%
+\ctexset{
   chapter={
-    % afterindent=true,
     pagestyle={fancy},
     beforeskip={-15pt},
     aftername=\hskip\ccwd,
@@ -125,19 +125,16 @@
     titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
   },
   section={
-    % afterindent=true,
     beforeskip={3.5ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{4}\xeCJKsetemboldenfactor{1}\bf\songti},
   },
   subsection={
-    % afterindent=true,
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
   },
   subsubsection={
-    % afterindent=true,
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
@@ -145,11 +142,10 @@
   appendix={
     number=\Alph{chapter},
   },
-  % paragraph/afterindent=true,
-  % subparagraph/afterindent=true
-  contentsname=\scu@contentsname,
-  listfigurename=\scu@listfigurename,
-  listtablename=\scu@listtablename
+  contentsname={\hspace*{\fill}\scu@contentsname\hspace*{\fill}},
+  listfigurename={\hspace*{\fill}\scu@listfigurename\hspace*{\fill}},
+  listtablename={\hspace*{\fill}\scu@listtablename\hspace*{\fill}},
+	bibname={\hspace*{\fill}\scu@bibname\hspace*{\fill}},
 }
 \ifscu@opt@chapc\ctexset{chapter/format=\centering}
 \else\ctexset{chapter/format=\raggedright}\fi
@@ -165,11 +161,28 @@
   \ctexset{chapter/nameformat+=\raggedright}
 }{}
 % setup acknoledge format
-\newenvironment{ack}{\chapter*{\raggedright\scu@acknowledgement@pre}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
+\newenvironment{ack}{\chapter*{\hspace*{\fill}\scu@acknowledgement@pre\hspace*{\fill}}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
+\RequirePackage[titles]{tocloft}
+\setlength\cftbeforechapskip{0pt}
+\renewcommand\cftdotsep{2}
+\renewcommand\cftdot{$\cdot$}
+\renewcommand\cftchapdotsep{\cftdotsep}
 \let\scu@tableofcontents\tableofcontents
-\newcommand\scu@maketableofcontents{\clearpage\pdfbookmark[0]{目录}{tableofcontents}\scu@tableofcontents}
+\def\scu@maketableofcontents{\clearpage\pdfbookmark[0]{\scu@contentsname}{tableofcontents}\scu@tableofcontents}
 \let\tableofcontents\scu@maketableofcontents
+
+\let\scu@listoffigures\listoffigures
+\def\scu@makelistoffigures{\clearpage\scu@listoffigures\addcontentsline{toc}{chapter}{\scu@listfigurename}}
+\let\listoffigures\scu@makelistoffigures
+
+\let\scu@listoftables\listoftables
+\def\scu@makelistoftables{\clearpage\scu@listoftables\addcontentsline{toc}{chapter}{\scu@listtablename}}
+\let\listoftables\scu@makelistoftables
+
+\let\scu@bibliography\bibliography
+\def\scu@makebibliography#1{\clearpage\scu@bibliography{#1}\addcontentsline{toc}{chapter}{\scu@bibname}}
+\let\bibliography\scu@makebibliography
 
 % Cover
 \def\scu@define@term#1{
@@ -277,7 +290,7 @@
 
 \newcommand\scu@makeannouncement{
   \clearpage
-  \chapter*{\scu@announcement@title}
+  \chapter*{\hspace*{\fill}\scu@announcement@title\hspace*{\fill}}
   \addcontentsline{toc}{chapter}{\scu@announcement@title}
   \scu@announcement@text\\[3cm]
 
@@ -287,7 +300,6 @@
       \scu@announcement@sig@supervisor & \thu@underline[3.5cm] { } \\[1.18cm]
     \end{tabular}\\
     \the\year{}年\hspace{1.5em}月\hspace{1.5em}日
-    % \scu@announcement@date
   \end{flushright}
 }
 
@@ -306,6 +318,9 @@
 \fancyhead[L]{\zihao{5} \scu@report@name}
 \fancyhead[R]{\zihao{5} \scu@ctitle@value}
 \scu@setfoot{\zihao{-5} \thepage}
+
+% Bib Style
+\setlength{\bibsep}{0ex}
 
 \AtEndOfClass{\input{scuthesis.cfg}}
 %%
