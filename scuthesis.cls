@@ -101,7 +101,7 @@
   % \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue}
 
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
 % Caption Style
@@ -111,7 +111,9 @@
 \captionsetup{labelformat=scu,labelsep=scu,font=scu}
 \captionsetup[table]{position=top,belowskip={12bp-\intextsep},aboveskip=3bp}
 \captionsetup[figure]{position=bottom,belowskip={12bp-\intextsep},aboveskip=3bp}
-\captionsetup[sub]{font=thu,skip=6bp}
+\captionsetup[sub]{font=scu,skip=6bp}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+\renewcommand\thesubtable{(\alph{subtable})}
 
 \ctexset{
   chapter={
