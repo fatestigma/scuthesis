@@ -1,5 +1,15 @@
 # ScuThesis 变更手册
+## ScuThesis v0.5.2
+_2016-04-30_
+
+本次变更文件为 `scuthesis.cls`：
+
+1. 修改目录深度为2
+2. 修复子图标题字体问题
+
 ## ScuThesis v0.5.1
+_2016-04-26_
+
 本次变更文件为 `scuthesis.cls` 与 `scuthesis.cfg`：
 
 1. 添加插图、表格、参考文献目录
