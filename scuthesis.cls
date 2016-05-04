@@ -16,12 +16,12 @@
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/04/23 v0.5.2 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/04/23 v0.5.3 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
 \SetupKeyvalOptions{family=scu,prefix=scu@opt@,setkeys=\kvsetkeys}
-\DeclareBoolOption[true]{chapc}
+\DeclareBoolOption[false]{chapc}
 \DeclareComplementaryOption{chapl}{chapc}
 \DeclareBoolOption[true]{abstract}
 \DeclareComplementaryOption{noabstract}{abstract}
@@ -45,14 +45,10 @@
   {\ctexset{fontset=scuthesis}}
   {\ctexset{fontset=mac}}
 
-\setmainfont[
-  Ligatures=TeX,
-  SmallCapsFont={Minion Pro},
-  SmallCapsFeatures={Letters=SmallCaps},]{Times New Roman}
-% \setsansfont{Arial}
-% \setmonofont{Menlo}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.5.2}
+\def\version{0.5.3}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -89,25 +85,22 @@
 \let\scu@cleardoublepage\cleardoublepage
 \newcommand\scu@clearemptydoublepage{\clearpage{\thispagestyle{plain}\scu@cleardoublepage}}
 \let\cleardoublepage\scu@clearemptydoublepage
-\renewcommand\frontmatter{%
-  % \if@openright\cleardoublepage\else\clearpage\fi
+\renewcommand\frontmatter{
   \@mainmatterfalse
   \pagenumbering{Roman}}
-\renewcommand\mainmatter{%
+\renewcommand\mainmatter{
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue
   \pagenumbering{arabic}}
-\renewcommand\backmatter{%
-  % \if@openright\cleardoublepage\else\clearpage\fi
-  \@mainmattertrue}
+\renewcommand\backmatter{\@mainmattertrue}
 
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
 % Caption Style
-\DeclareCaptionLabelFormat{scu}{{\zihao{5}\songti #1~\rmfamily #2}}
+\DeclareCaptionLabelFormat{scu}{{\zihao{5}\sffamily #1~\rmfamily #2}}
 \DeclareCaptionLabelSeparator{scu}{\hspace{1em}}
-\DeclareCaptionFont{scu}{\zihao{5}}
+\DeclareCaptionFont{scu}{\zihao{5}\sffamily}
 \captionsetup{labelformat=scu,labelsep=scu,font=scu}
 \captionsetup[table]{position=top,belowskip={12bp-\intextsep},aboveskip=3bp}
 \captionsetup[figure]{position=bottom,belowskip={12bp-\intextsep},aboveskip=3bp}
@@ -123,23 +116,23 @@
     afterskip={10pt},
     name={,},
     number=\arabic{chapter},
-    nameformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
-    titleformat={\zihao{3}\xeCJKsetemboldenfactor{1}\bfseries\songti},
+    nameformat={\zihao{3}\bf\songti},
+    titleformat={\zihao{3}\bf\songti},
   },
   section={
     beforeskip={3.5ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
-    format={\zihao{4}\xeCJKsetemboldenfactor{1}\bf\songti},
+    format={\zihao{4}\bf\heiti},
   },
   subsection={
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
-    afterskip={2.3ex \@plus.2ex},
-    format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
+    afterskip={1ex \@plus .2ex},
+    format={\zihao{-4}\kaishu},
   },
   subsubsection={
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
-    afterskip={2.3ex \@plus.2ex},
-    format={\zihao{-4}\xeCJKsetemboldenfactor{1}\bf\songti},
+    afterskip={1ex \@plus.2ex},
+    format={\zihao{-4}\bf\songti},
   },
   appendix={
     number=\Alph{chapter},
@@ -165,11 +158,18 @@
 % setup acknoledge format
 \newenvironment{ack}{\chapter*{\hspace*{\fill}\scu@acknowledgement@pre\hspace*{\fill}}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
-\RequirePackage[titles]{tocloft}
-\setlength\cftbeforechapskip{0pt}
-\renewcommand\cftdotsep{2}
-\renewcommand\cftdot{$\cdot$}
-\renewcommand\cftchapdotsep{\cftdotsep}
+% toc
+\RequirePackage{titletoc}
+\titlecontents{chapter}[0pt]{\filright\zihao{-3}\bf\songti}
+              {\contentspush{\thecontentslabel\ }}
+              {}{\titlerule*[6pt]{$\cdot$}\contentspage}
+\titlecontents{section}[1em]{\addvspace{-3pt}\filright\zihao{4}\songti}
+              {\contentspush{\thecontentslabel\ }}
+              {}{\titlerule*[6pt]{$\cdot$}\contentspage}
+\titlecontents{subsection}[2em]{\addvspace{-3pt}\filright\zihao{-4}\kaishu}
+              {\contentspush{\thecontentslabel\ }}
+              {}{\titlerule*[6pt]{$\cdot$}\contentspage}
+
 \let\scu@tableofcontents\tableofcontents
 \def\scu@maketableofcontents{\clearpage\pdfbookmark[0]{\scu@contentsname}{tableofcontents}\scu@tableofcontents}
 \let\tableofcontents\scu@maketableofcontents

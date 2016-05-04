@@ -21,9 +21,12 @@
 \setCJKsansfont{SimHei}
 \setCJKmonofont{KaiTi}
 \setCJKfamilyfont{zhsong}{STZhongsong}
+\xeCJKsetemboldenfactor{3}
 \setCJKfamilyfont{songti}{SimSun}
+\xeCJKsetemboldenfactor{1}
 \setCJKfamilyfont{zhhei}{SimHei}
 \setCJKfamilyfont{zhkai}{KaiTi}
+\xeCJKsetemboldenfactor{3}
 \setCJKfamilyfont{zhfs}{FangSong}
 \setCJKfamilyfont{zhli}{STLiti}
 \setCJKfamilyfont{zhyou}{Yuanti SC}
