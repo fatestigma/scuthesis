@@ -16,7 +16,7 @@
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/04/23 v0.5.3 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/04/23 v0.6 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -48,7 +48,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.5.3}
+\def\version{0.6}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -149,12 +149,18 @@
 % Setup appendix format
 \let\scu@appendix\appendix
 \renewenvironment{appendix}{
+	\let\title\scu@appendix@title
   \scu@appendix
   \ctexset{chapter/format=\raggedright}
   \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
   \renewcommand\theequation{\Alph{section}.\arabic{equation}}
   \ctexset{chapter/nameformat+=\raggedright}
-}{}
+}{\let\title\@gobble}
+\let\title\@gobble
+\newcommand{\scu@appendix@title}[1]{
+  \begin{center}
+    \bfseries\zihao{-4} #1
+  \end{center}}
 % setup acknoledge format
 \newenvironment{ack}{\chapter*{\hspace*{\fill}\scu@acknowledgement@pre\hspace*{\fill}}}{\addcontentsline{toc}{chapter}{\scu@acknowledgement@pre}\clearpage}
 
@@ -204,7 +210,20 @@
 \scu@define@term{sid}
 \scu@define@term{session}
 
-\newcommand\thu@underline[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
+\newlength\scu@titlelength
+\def\scu@splittitlelines#1{
+    \begingroup
+    \edef\@tempa{#1\space}
+    \expandafter\endgroup
+    \expandafter\scu@readtitlelines\@tempa\relax
+}
+\def\scu@readtitlelines#1 #2\relax{
+			& \hskip1pt\underline{\hb@xt@ 8cm{\hss#1\hss}}\hskip3pt
+      \begingroup
+      \ifx\relax#2\relax\def\next{\endgroup\\[.8cm]}
+      \else\def\next{\endgroup\\[.3cm]\scu@readtitlelines#2\relax}%
+      \fi\next}
+\newcommand\scu@underline[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
 \newcommand\scu@cover{
   \pdfbookmark[-1]{\scu@ctitle@value}{ctitle}
   \begin{center}
@@ -212,21 +231,24 @@
   \includegraphics[height=1.6cm]{./images/scu}\par\vskip1.35cm % Logo
   {\zhsong\zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % Title
   \includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % Badge
+	\setlength\scu@titlelength{\widthof{\bf\kaishu\scu@ctitle@value}}
   \newcolumntype{A}{>{\songti}r<{}}
   \newcolumntype{B}{>{\bf\kaishu}l<{}}
   \zihao{4}
   \begin{tabular}{AB}
-    \scu@ctitle@pre & \thu@underline[8cm]\scu@ctitle@value\\[1.16cm]
-    \scu@cdepartment@pre & \thu@underline[8cm]\scu@cdepartment@value\\[1.16cm]
-    \scu@cmajor@pre & \thu@underline[8cm]\scu@cmajor@value\\[1.16cm]
-    \scu@cname@p  & \thu@underline[8cm]\scu@cname@value\\[1.16cm]
+		\ifthenelse{\lengthtest{\scu@titlelength < 200pt}}{
+			\scu@ctitle@pre & \scu@underline[8cm]\scu@ctitle@value\\[1.16cm]}{
+			\scu@ctitle@pre \scu@splittitlelines{\scu@ctitle@value}}
+    \scu@cdepartment@pre & \scu@underline[8cm]\scu@cdepartment@value\\[1.16cm]
+    \scu@cmajor@pre & \scu@underline[8cm]\scu@cmajor@value\\[1.16cm]
+    \scu@cname@p  & \scu@underline[8cm]\scu@cname@value\\[1.16cm]
   \end{tabular}\\
   \begin{tabular}{ABAB}
-    \scu@sid@pre & \thu@underline[3cm]\scu@sid@value 
-    & \scu@session@pre & \thu@underline[3cm]\scu@session@value\\[1.0cm]
+    \scu@sid@pre & \scu@underline[3cm]\scu@sid@value 
+    & \scu@session@pre & \scu@underline[3cm]\scu@session@value\\[1.0cm]
   \end{tabular}\\
   \begin{tabular}{AB}
-    \scu@csupervisor@pre & \thu@underline[8cm]\scu@csupervisor@value\\[0.6cm]
+    \scu@csupervisor@pre & \scu@underline[8cm]\scu@csupervisor@value\\[0.6cm]
   \end{tabular}\par\vskip0.9cm
   {\songti\zihao{-3}\scu@jiaowuchu@title}\par\vskip-3pt
   {\songti\zihao{-3}\scu@jiaowuchu@date}
@@ -298,8 +320,8 @@
 
   \begin{flushright}
     \begin{tabular}{cc}
-      \scu@announcement@sig@author & \thu@underline[3.5cm] { } \\[1.18cm]
-      \scu@announcement@sig@supervisor & \thu@underline[3.5cm] { } \\[1.18cm]
+      \scu@announcement@sig@author & \scu@underline[3.5cm] { } \\[1.18cm]
+      \scu@announcement@sig@supervisor & \scu@underline[3.5cm] { } \\[1.18cm]
     \end{tabular}\\
     \the\year{}年\hspace{1.5em}月\hspace{1.5em}日
   \end{flushright}
