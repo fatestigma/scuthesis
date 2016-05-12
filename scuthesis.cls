@@ -16,7 +16,7 @@
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/04/23 v0.6 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/04/23 v0.6.1 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -48,7 +48,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.6}
+\def\version{0.6.1}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -56,6 +56,7 @@
 \RequirePackage{booktabs}
 % 参考文献
 \RequirePackage[square,numbers,super,sort&compress]{natbib}
+\RequirePackage[shortlabels]{enumitem}
 % 书签
 \RequirePackage{xcolor}
 \RequirePackage{hyperref}
@@ -155,6 +156,8 @@
   \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
   \renewcommand\theequation{\Alph{section}.\arabic{equation}}
   \ctexset{chapter/nameformat+=\raggedright}
+  \newlist{originbbl}{enumerate}{1}
+  \setlist[originbbl]{label=[\arabic*],align=left,nosep,leftmargin=10mm,labelsep=!,itemsep=3bp,before={\vspace{0.5\baselineskip}\renewcommand{\baselinestretch}{1.3}\zihao{5}}}
 }{\let\title\@gobble}
 \let\title\@gobble
 \newcommand{\scu@appendix@title}[1]{

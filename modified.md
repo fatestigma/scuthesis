@@ -1,4 +1,10 @@
 # ScuThesis 变更手册
+## ScuThesis v0.6.1
+_2016-05-12_
+本次变更文件为 `scuthesis.cls`。
+
+1. 为翻译原文的参考文献添加一个包装好的 enumerate 环境 `originbbl`。
+
 ## ScuThesis v0.6
 _2016-05-10_
 本次变更文件为 `scuthesis.cls`。
