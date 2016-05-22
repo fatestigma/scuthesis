@@ -92,6 +92,7 @@
 \renewcommand\mainmatter{
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue
+	\ctexset{chapter/pagestyle={fancy}}
   \pagenumbering{arabic}}
 \renewcommand\backmatter{\@mainmattertrue}
 
@@ -180,7 +181,7 @@
               {}{\titlerule*[6pt]{$\cdot$}\contentspage}
 
 \let\scu@tableofcontents\tableofcontents
-\def\scu@maketableofcontents{\clearpage\pdfbookmark[0]{\scu@contentsname}{tableofcontents}\scu@tableofcontents}
+\def\scu@maketableofcontents{\ctexset{chapter/pagestyle={toc}}\clearpage\setcounter{page}{1}\pagenumbering{arabic}\pdfbookmark[0]{\scu@contentsname}{tableofcontents}\scu@tableofcontents\cleardoublepage}
 \let\tableofcontents\scu@maketableofcontents
 
 \let\scu@listoffigures\listoffigures
@@ -313,7 +314,7 @@
   {\sf\zihao{4} \scu@ename@pre : \scu@ename@value \hskip1cm \scu@esupervisor@pre : \scu@esupervisor@value}\par
   \end{center}\par\vskip1.1cm
   {\bf\zihao{5}[Abstract]}\hskip.2cm{\zihao{5}\scu@eabstract}\vskip1cm
-  {\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}}
+  {\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}\clearpage}
 
 \newcommand\scu@makeannouncement{
   \clearpage
@@ -333,12 +334,18 @@
 \newcommand\announcement\scu@makeannouncement
 
 % Footer and Header
-\newcommand\scu@setfoot[1]{\if@openright\fancyfoot{}\fancyfoot[RO,LE]{#1}\else\fancyfoot[C]{#1}\fi}
-\fancypagestyle{plain}{%
-  \fancyhf{} % Clear current footer and header
-  \renewcommand{\headrulewidth}{0pt}%
-  \renewcommand{\footrulewidth}{0pt}%
+% \newcommand\scu@setfoot[1]{\if@openright\fancyfoot{}\fancyfoot[RO,LE]{#1}\else\fancyfoot[C]{#1}\fi}
+\newcommand\scu@setfoot[1]{\fancyfoot{}\fancyfoot[RO,LE]{#1}}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
   \scu@setfoot{\zihao{-5} \thepage}
+}
+\fancypagestyle{toc}{
+  \fancyhf{}
+	\fancyhead[L]{\zihao{5} \scu@report@name}
+	\fancyhead[R]{\zihao{5} \scu@ctitle@value}
 }
 \pagestyle{fancy}
 \fancyhead{} %clear all fields

@@ -1,4 +1,13 @@
 # ScuThesis 变更手册
+## ScuThesis v0.6.2
+_2016-05-22_
+
+本次变更文件为 `scuthesis.cls`、`scuthesis.cfg`。
+
+1. 目录第一页去除了页码。
+2. 页脚页码默认采用奇偶不同。
+3. 修改论文标题为「设计」。
+
 ## ScuThesis v0.6.1
 _2016-05-12_
 本次变更文件为 `scuthesis.cls`。
