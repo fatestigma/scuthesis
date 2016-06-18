@@ -10,13 +10,13 @@
 % version 2005/12/01 or later.
 %
 % This work has the LPPL maintenance status `maintained'.
-% 
+%
 % The Current Maintainer of this work is Xi Jin.
 %
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/04/23 v0.6.1 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/06/18 v0.6.2 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -48,7 +48,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.6.1}
+\def\version{0.6.2}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -222,7 +222,7 @@
     \expandafter\scu@readtitlelines\@tempa\relax
 }
 \def\scu@readtitlelines#1 #2\relax{
-			& \hskip1pt\underline{\hb@xt@ 8cm{\hss#1\hss}}\hskip3pt
+      & \hskip1pt\underline{\hb@xt@ 8cm{\hss#1\hss}}\hskip3pt
       \begingroup
       \ifx\relax#2\relax\def\next{\endgroup\\[.8cm]}
       \else\def\next{\endgroup\\[.3cm]\scu@readtitlelines#2\relax}%
@@ -293,6 +293,7 @@
 
 \newcommand\scu@makeabstract{
   \clearpage
+  \thispagestyle{abstract}
   \pdfbookmark[0]{摘要}{cabstract}
   \begin{center}
   \vspace*{1.0cm}
@@ -306,6 +307,7 @@
   {\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}主题词{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
   \clearpage}
   % English Abstract
+  \thispagestyle{abstract}
   \pdfbookmark[0]{Abstract}{eabstract}
   \begin{center}
   \vspace*{.75cm}
@@ -334,25 +336,26 @@
 \newcommand\announcement\scu@makeannouncement
 
 % Footer and Header
-% \newcommand\scu@setfoot[1]{\if@openright\fancyfoot{}\fancyfoot[RO,LE]{#1}\else\fancyfoot[C]{#1}\fi}
-\newcommand\scu@setfoot[1]{\fancyfoot{}\fancyfoot[RO,LE]{#1}}
 \fancypagestyle{plain}{
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
-  \scu@setfoot{\zihao{-5} \thepage}
+  \fancyfoot{}\fancyfoot[RO,LE]{\zihao{-5} \thepage}
+}
+\fancypagestyle{abstract}{
+  \fancyfoot{}
+  \fancyfoot[R]{\zihao{-5} \thepage}
 }
 \fancypagestyle{toc}{
   \fancyhf{}
-	\fancyhead[L]{\zihao{5} \scu@report@name}
-	\fancyhead[R]{\zihao{5} \scu@ctitle@value}
+  \fancyhead[L]{\zihao{5} \scu@report@name}
+  \fancyhead[R]{\zihao{5} \scu@ctitle@value}
 }
 \pagestyle{fancy}
 \fancyhead{} %clear all fields
 \fancyhead[L]{\zihao{5} \scu@report@name}
 \fancyhead[R]{\zihao{5} \scu@ctitle@value}
-\scu@setfoot{\zihao{-5} \thepage}
-
+\fancyfoot{}\fancyfoot[RO,LE]{\zihao{-5} \thepage}
 % Bib Style
 \setlength{\bibsep}{0ex}
 
