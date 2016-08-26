@@ -74,7 +74,8 @@
 \RequirePackage{hypernat}
 
 \RequirePackage{geometry}
-\geometry{a4paper,
+\geometry{$%
+  a4paper,
   top=2.5cm,
   bottom=2.5cm,
   left=2.5cm,
@@ -86,13 +87,13 @@
 \let\scu@cleardoublepage\cleardoublepage
 \newcommand\scu@clearemptydoublepage{\clearpage{\thispagestyle{plain}\scu@cleardoublepage}}
 \let\cleardoublepage\scu@clearemptydoublepage
-\renewcommand\frontmatter{
+\renewcommand\frontmatter{%
   \@mainmatterfalse
   \pagenumbering{Roman}}
-\renewcommand\mainmatter{
+\renewcommand\mainmatter{%
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmattertrue
-	\ctexset{chapter/pagestyle={fancy}}
+  \ctexset{chapter/pagestyle={fancy}}
   \pagenumbering{arabic}}
 \renewcommand\backmatter{\@mainmattertrue}
 
@@ -110,8 +111,8 @@
 \renewcommand\thesubfigure{(\alph{subfigure})}
 \renewcommand\thesubtable{(\alph{subtable})}
 
-\ctexset{
-  chapter={
+\ctexset{%
+  chapter={%
     pagestyle={fancy},
     beforeskip={-15pt},
     aftername=\hskip\ccwd,
@@ -121,28 +122,28 @@
     nameformat={\zihao{3}\bf\songti},
     titleformat={\zihao{3}\bf\songti},
   },
-  section={
+  section={%
     beforeskip={3.5ex \@plus 1ex \@minus .2ex},
     afterskip={2.3ex \@plus.2ex},
     format={\zihao{4}\bf\heiti},
   },
-  subsection={
+  subsection={%
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={1ex \@plus .2ex},
     format={\zihao{-4}\kaishu},
   },
-  subsubsection={
+  subsubsection={%
     beforeskip={3.25ex \@plus 1ex \@minus .2ex},
     afterskip={1ex \@plus.2ex},
     format={\zihao{-4}\bf\songti},
   },
-  appendix={
+  appendix={%
     number=\Alph{chapter},
   },
   contentsname={\hspace*{\fill}\scu@contentsname\hspace*{\fill}},
   listfigurename={\hspace*{\fill}\scu@listfigurename\hspace*{\fill}},
   listtablename={\hspace*{\fill}\scu@listtablename\hspace*{\fill}},
-	bibname={\hspace*{\fill}\scu@bibname\hspace*{\fill}},
+  bibname={\hspace*{\fill}\scu@bibname\hspace*{\fill}},
 }
 \ifscu@opt@chapc\ctexset{chapter/format=\centering}
 \else\ctexset{chapter/format=\raggedright}\fi
@@ -150,8 +151,8 @@
 
 % Setup appendix format
 \let\scu@appendix\appendix
-\renewenvironment{appendix}{
-	\let\title\scu@appendix@title
+\renewenvironment{appendix}{%
+  \let\title\scu@appendix@title
   \scu@appendix
   \ctexset{chapter/format=\raggedright}
   \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
@@ -161,7 +162,7 @@
   \setlist[originbbl]{label=[\arabic*],align=left,nosep,leftmargin=10mm,labelsep=!,itemsep=3bp,before={\vspace{0.5\baselineskip}\renewcommand{\baselinestretch}{1.3}\zihao{5}}}
 }{\let\title\@gobble}
 \let\title\@gobble
-\newcommand{\scu@appendix@title}[1]{
+\newcommand{\scu@appendix@title}[1]{%
   \begin{center}
     \bfseries\zihao{-4} #1
   \end{center}}
@@ -197,7 +198,7 @@
 \let\bibliography\scu@makebibliography
 
 % Cover
-\def\scu@define@term#1{
+\def\scu@define@term#1{%
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname scu@#1@value\endcsname{##1}}
   \csname #1\endcsname{}}
@@ -215,34 +216,34 @@
 \scu@define@term{session}
 
 \newlength\scu@titlelength
-\def\scu@splittitlelines#1{
+\def\scu@splittitlelines#1{%
     \begingroup
     \edef\@tempa{#1\space}
     \expandafter\endgroup
     \expandafter\scu@readtitlelines\@tempa\relax
 }
-\def\scu@readtitlelines#1 #2\relax{
+\def\scu@readtitlelines#1 #2\relax{%
       & \hskip1pt\underline{\hb@xt@ 8cm{\hss#1\hss}}\hskip3pt
       \begingroup
       \ifx\relax#2\relax\def\next{\endgroup\\[.8cm]}
       \else\def\next{\endgroup\\[.3cm]\scu@readtitlelines#2\relax}%
       \fi\next}
 \newcommand\scu@underline[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
-\newcommand\scu@cover{
+\newcommand\scu@cover{%
   \pdfbookmark[-1]{\scu@ctitle@value}{ctitle}
   \begin{center}
   \vspace*{.1cm}
   \includegraphics[height=1.6cm]{./images/scu}\par\vskip1.35cm % Logo
   {\zhsong\zihao{1}\scu@bachelor@report@title}\par\vskip1.2cm      % Title
   \includegraphics[height=3.5cm]{./images/logo}\par\vskip0.4cm % Badge
-	\setlength\scu@titlelength{\widthof{\bf\kaishu\scu@ctitle@value}}
+  \setlength\scu@titlelength{\widthof{\bf\kaishu\scu@ctitle@value}}
   \newcolumntype{A}{>{\songti}r<{}}
   \newcolumntype{B}{>{\bf\kaishu}l<{}}
   \zihao{4}
   \begin{tabular}{AB}
-		\ifthenelse{\lengthtest{\scu@titlelength < 200pt}}{
-			\scu@ctitle@pre & \scu@underline[8cm]\scu@ctitle@value\\[1.16cm]}{
-			\scu@ctitle@pre \scu@splittitlelines{\scu@ctitle@value}}
+    \ifthenelse{\lengthtest{\scu@titlelength < 200pt}}{%
+      \scu@ctitle@pre & \scu@underline[8cm]\scu@ctitle@value\\[1.16cm]}{%
+      \scu@ctitle@pre \scu@splittitlelines{\scu@ctitle@value}}
     \scu@cdepartment@pre & \scu@underline[8cm]\scu@cdepartment@value\\[1.16cm]
     \scu@cmajor@pre & \scu@underline[8cm]\scu@cmajor@value\\[1.16cm]
     \scu@cname@p  & \scu@underline[8cm]\scu@cname@value\\[1.16cm]
@@ -267,7 +268,7 @@
     pdfsubject={\scu@bachelor@report@title},
     pdfcreator={\scuthesis-v\version}}}
 
-\newcommand\makecover{
+\newcommand\makecover{%
   \scu@setup@pdfinfo
   \begin{titlepage}
     \scu@cover
@@ -291,7 +292,7 @@
 \newcommand{\scu@@eabstract}[1]{\long\gdef\scu@eabstract{#1}}
 \newenvironment{eabstract}[1][]{\collect@body\scu@@eabstract\gdef\scu@eabstract@key{#1}}{}
 
-\newcommand\scu@makeabstract{
+\newcommand\scu@makeabstract{%
   \clearpage
   \thispagestyle{abstract}
   \pdfbookmark[0]{摘要}{cabstract}
@@ -318,7 +319,7 @@
   {\bf\zihao{5}[Abstract]}\hskip.2cm{\zihao{5}\scu@eabstract}\vskip1cm
   {\bf\zihao{5}[Key Words]}\hskip.2cm{\zihao{5}\scu@eabstract@key}\clearpage}
 
-\newcommand\scu@makeannouncement{
+\newcommand\scu@makeannouncement{%
   \clearpage
   \chapter*{\hspace*{\fill}\scu@announcement@title\hspace*{\fill}}
   \addcontentsline{toc}{chapter}{\scu@announcement@title}
@@ -336,17 +337,17 @@
 \newcommand\announcement\scu@makeannouncement
 
 % Footer and Header
-\fancypagestyle{plain}{
+\fancypagestyle{plain}{%
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
   \fancyfoot{}\fancyfoot[RO,LE]{\zihao{-5} \thepage}
 }
-\fancypagestyle{abstract}{
+\fancypagestyle{abstract}{%
   \fancyfoot{}
   \fancyfoot[R]{\zihao{-5} \thepage}
 }
-\fancypagestyle{toc}{
+\fancypagestyle{toc}{%
   \fancyhf{}
   \fancyhead[L]{\zihao{5} \scu@report@name}
   \fancyhead[R]{\zihao{5} \scu@ctitle@value}
