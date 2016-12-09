@@ -1,0 +1,1 @@
+/Users/RK/Git/scuthesis/scuthesis.cls

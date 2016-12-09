@@ -1,0 +1,67 @@
+\chapter{模板使用说明}
+\section{使用向导}
+\subsection{文件结构}
+
+\scuthesis{}为了不使主文件过大而使得写作过程中容易受到影响，
+而建议采用表~\ref{tab:template-files} 建议的结构对论文文章进行分文件组织。
+
+\begin{table}[htb]
+  \centering
+  \begin{minipage}[t]{.8\linewidth} 
+  \caption{文件结构}
+  \label{tab:template-files}
+    \begin{tabularx}{\linewidth}{lX}
+      \toprule[1.5pt]
+      {\heiti 文件名} & {\heiti 描述} \\\midrule[1pt]
+      scuthesis.cls & 模板类文件（\textbf{通常不需要修改}）。\\
+      scuthesis.cfg & 模板配置文件（\textbf{通常不需要修改}）。\\
+      scuthesis.bst & 参考文献BIB\TeX{}样式文件（\textbf{不建议修改}）。\\
+      scuthesis.sty & 常用的包和命令可以封装在这里。\\
+			main.tex & 主文件，整合所有分散的文件于此并最后生成论文文档。\\
+			chapters/basic.tex &  基本的个人信息。\\
+			chapters/prologue.tex &  论文正文之前的包含\textbf{摘要}都放在这里。\\
+			chapters/epilogue.tex &  论文正文之后的包含\textbf{致谢}都放在这里。\\
+			chapters/chap01.tex &  论文正文第一章。\\
+			chapters/appendix01.tex &  附录第一章。\\
+      \bottomrule[1.5pt]
+    \end{tabularx}
+  \end{minipage}
+\end{table}
+
+在写更多的章节后，仅需要在\texttt{main.tex}文件中添加进去就可以了，如果对于 \LaTeX{} 不是很了解的可以直接参考模板文件的写作方式与风格。
+
+\subsection{上手步骤}
+首先应该先使用\XeLaTeX{}编译\texttt{main.tex}文件，确定基本环境搭建无误。
+然后修改\texttt{chapters/basic.tex}文件，按照提示替换大括号内的内容，
+填写个人基本信息，这一步完成后就可以看到\scuthesis{}已经定义为你的论文模板了。
+
+其中注意，对于标题过长的，在定义过程中需要断行的地方加入一个$\sim$符号即可。
+
+在\texttt{chapters/chap01.tex}中写你的正文第一章，
+写第二章应当在\texttt{chapters} 文件夹下新建\texttt{chap02.tex}文件，
+并在\texttt{main.tex}文件中的 \texttt{\textbackslash{}include\{chap01.tex\}}下将新的章节也\texttt{include}进来。
+\scuthesis{}建议大家按照「章」分文件保存，
+这样不会因所有内容堆积在一个文件内使得单个文件过于臃肿，
+可以更专心与内容的输出，而按「节」存放过于琐碎，
+此外如果想使用按「节」保存的同学需要注意 \texttt{\textbackslash{}inlcude}命令会自动换页，
+所以按「节」保存的文件应当改用 \texttt{\textbackslash{}input}命令来引入。
+
+完成正文后，可以在\texttt{chapters/prologue.tex}文件中完成中文和英文摘要，并填写关键词；
+在\texttt{chapters/epilogue.tex} 文件中完成感谢内容；
+在\texttt{chapters/appendix01.tex}中可以填写你的附录，
+附录部分和正文一样按「章」分文件保存，
+更多的章节需要自己创建文件并引入到\texttt{main.tex}文件中。
+
+最后是参考文献的部分，\scuthesis{}采用BIB\TeX{}进行文献管理，
+将文献按照BIB\TeX{}的规范按条目保存在\texttt{refs.bib}文件中，
+在正文中需要插入参考文献的地方使用 \texttt{\textbackslash{}citep}来引入文献，文献序号以及最后的参考文献都会由\LaTeX{}自动生成。
+
+\section{配置}
+	\subsection{字体}
+
+	\scuthesis{}中已经根据需求预设了本科生毕业论文需要的中文字体，如中易宋体等，以及西文字体Times New Roman等。
+
+	如果现有的字体尚不足以满足你的需求，可以在 \texttt{ctex-fontset-scuthesis.def} 文件中添加，但是不建议修改目前预设字体，因为它们是必需的\citep{scdxbkbylwgshckwxzlyq_2006}。
+
+\section{打印}
+通常来说采用双面打印，其中封面单独胶封，而摘要单面打印，而在模板中页脚与页面都已经预设好了。此外，对于需要单面打印的可以添加\texttt{oneside}参数来使所有页面适合单面打印。

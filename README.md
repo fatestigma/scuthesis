@@ -11,6 +11,8 @@ ScuThsis 是一个**非官方**的四川大学本科生毕业设计论文模板�
 
 建议将模板与论文项目放置在不同的文件夹下，论文项目下使用符号链接链接到模板所在文件夹下，这样方便同时使用 git 管理模板版本和你自己的论文版本。
 
+README文件夹下为帮助文档的源码，可以作为一个参考看看。
+
 ## License
 The content of this project itself is licensed under the [LaTeX Project Public License 1.3c][lppl] license.
 

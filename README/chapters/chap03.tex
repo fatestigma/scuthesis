@@ -1,0 +1,175 @@
+\chapter{基本使用}
+为了让大家能尽快的熟悉和上手使用\textsc{ScuThesis}，在类中已经封装了部分常用的宏包，并在下面几个主题中分别介绍其大概的使用方法。
+
+\section{个人信息}
+对于封面和摘要中的个人信息与导师信息需要事先在 chapters/basic.tex 文件中按照提示填写，在文档生成的过程中会自动为你填好。
+
+目前还存在的问题是：对于论文题目过长的目前还无法处理。
+
+\section{字体}
+得益于 C\TeX{} 和 \XeLaTeX{}，使得在中文字体的使用与设置都简单非常多（请不要考虑使用各种网络上流传的\texttt{CJK}环境的解决方案）。
+
+C\TeX{} 和 \textsc{ScuThesis} 已经提供论文需要的常用中文字体：中易宋体、中易仿宋、中易黑体、中易楷体、中易隶书、中易幼圆与华文中宋，以及西文字体：Times New Roman，对应的命令可以见表~\ref{tab:fonts-commands}
+
+\begin{table}[htb]
+	\centering
+	\begin{minipage}[t]{.4\linewidth} 
+		\centering
+		\caption{字体与指令} \label{tab:fonts-commands}
+		\begin{tabular}{ll}
+			\toprule[1.5pt]
+			{\heiti 字体名称} & {\heiti 对应命令} \\\midrule[1pt]
+			{\songti 中易宋体} & \texttt{\textbackslash{}songti} \\
+			{\fangsong 中易仿宋} & \texttt{\textbackslash{}fangsong} \\
+			{\heiti 中易黑体} & \texttt{\textbackslash{}heiti} \\
+			{\kaishu 中易楷体} & \texttt{\textbackslash{}kaishu} \\
+			{\zhsong 华文中宋} & \texttt{\textbackslash{}zhsong} \\
+			\bottomrule[1.5pt]
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}[t]{.4\linewidth} 
+		\centering
+		\caption{字体尺寸与指令} \label{tab:fontsize-commands}
+		\begin{tabular}{cl}
+			\toprule[1.5pt]
+			{\heiti 字体大小} & {\heiti 对应命令} \\\midrule[1pt]
+			{\zihao{4} 四号} & \texttt{\textbackslash{}zihao\{4\}} \\
+			{\zihao{-4} 小四} & \texttt{\textbackslash{}zihao\{-4\}} \\
+			\bottomrule[1.5pt]
+		\end{tabular}
+	\end{minipage}
+\end{table}
+
+C\TeX{} 对字型大小也有很好的封装，使用 \texttt{\textbackslash{}zihao\{number\}}来获取指定大小的字型，可以见表~\ref{tab:fontsize-commands} 中的例子。
+
+\section{数学公式}
+数学公式的排版一直以来都是\TeX{}排版系统的强项，而在\LaTeX{}中数学公式主要有两种模式：行间模式和独立模式\citep{latexnotes203}。前者主要用于在正文中添加数学内容，而后者独自排列，对于数学模式见表~\ref{tab:math-commands}。
+
+\begin{table}[htb]
+	\centering
+	\caption{数学公式与命令} \label{tab:math-commands}
+	\begin{tabular}{ccccc}
+		\toprule[1.5pt]
+		{\heiti 数学模式} & {\heiti \TeX{}命令} & {\heiti \LaTeX{}命令} & {\heiti \LaTeX{}环境} & {\heiti amsmath环境} \\\midrule[1pt]
+		行间公式 & \texttt{\$\dots\$} & \texttt{\textbackslash(\dots\textbackslash)} & \texttt{math} & \\
+		独立公式（无编号） & \texttt{\$\$\dots\$\$} & \texttt{\textbackslash[\dots\textbackslash]} & \texttt{displaymath} & \texttt{equation*} \\
+		独立公式（有编号） & &  & \texttt{equation} & \texttt{equation} \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+\section{表格}
+表格在前面已经演示过了，但是有的时候你需要对一些单元表格进行合并，这里我们就需要使用宏包\texttt{multirow}来实现了，效果如表~\ref{tab:complex-table}。
+
+\begin{table}[htbp]
+  \centering
+  \caption{复杂表格示例}
+  \label{tab:complex-table}
+  \begin{tabular}[c]{cccc}
+		\toprule[1.5pt]
+		\multirow{2}{2em}{\heiti 总分}& \multicolumn{3}{c}{\heiti 评分值} \\\cline{2-4}
+		& {\heiti 甲} & {\heiti 乙} & {\heiti 丙} \\\midrule[1pt]
+		10 & 8-10 & 6-7 & 0-5 \\
+		\bottomrule[1.5pt]
+\end{tabular}
+\end{table}
+
+对于有的时候我们需要展示的数据可能会非常多，如果表格甚至长到跨页，我们可以使用\texttt{longtable}宏包来处理表格跨页的情况，效果如表~\ref{tab:performance}。
+
+\begin{longtable}[c]{c*{6}{r}}
+\caption{实验数据}\label{tab:performance}\\
+\toprule[1.5pt]
+ 测试程序 & \multicolumn{1}{c}{正常运行} & \multicolumn{1}{c}{同步} & \multicolumn{1}{c}{检查点} & \multicolumn{1}{c}{卷回恢复}
+& \multicolumn{1}{c}{进程迁移} & \multicolumn{1}{c}{检查点} \\
+& \multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{时间 (s)}&
+\multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{
+  时间 (s)}&  文件（KB）\\\midrule[1pt]
+\endfirsthead
+\multicolumn{7}{c}{\zihao{5}\sffamily 表~\rmfamily\thetable\sffamily（续）\hskip1em \zihao{5}\sffamily 实验数据}\\
+\toprule[1.5pt]
+ 测试程序 & \multicolumn{1}{c}{正常运行} & \multicolumn{1}{c}{同步} & \multicolumn{1}{c}{检查点} & \multicolumn{1}{c}{卷回恢复}
+& \multicolumn{1}{c}{进程迁移} & \multicolumn{1}{c}{检查点} \\
+& \multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{时间 (s)}&
+\multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{时间 (s)}& \multicolumn{1}{c}{
+  时间 (s)}&  文件（KB）\\\midrule[1pt]
+\endhead
+\hline
+\multicolumn{7}{r}{续下页}
+\endfoot
+\endlastfoot
+CG.A.2 & 23.05 & 0.002 & 0.116 & 0.035 & 0.589 & 32491 \\
+CG.A.4 & 15.06 & 0.003 & 0.067 & 0.021 & 0.351 & 18211 \\
+CG.A.8 & 13.38 & 0.004 & 0.072 & 0.023 & 0.210 & 9890 \\
+CG.B.2 & 867.45 & 0.002 & 0.864 & 0.232 & 3.256 & 228562 \\
+CG.B.4 & 501.61 & 0.003 & 0.438 & 0.136 & 2.075 & 123862 \\
+CG.B.8 & 384.65 & 0.004 & 0.457 & 0.108 & 1.235 & 63777 \\
+MG.A.2 & 112.27 & 0.002 & 0.846 & 0.237 & 3.930 & 236473 \\
+MG.A.4 & 59.84 & 0.003 & 0.442 & 0.128 & 2.070 & 123875 \\
+MG.A.8 & 31.38 & 0.003 & 0.476 & 0.114 & 1.041 & 60627 \\
+MG.B.2 & 526.28 & 0.002 & 0.821 & 0.238 & 4.176 & 236635 \\
+MG.B.4 & 280.11 & 0.003 & 0.432 & 0.130 & 1.706 & 123793 \\
+MG.B.8 & 148.29 & 0.003 & 0.442 & 0.116 & 0.893 & 60600 \\
+LU.A.2 & 2116.54 & 0.002 & 0.110 & 0.030 & 0.532 & 28754 \\
+LU.A.4 & 1102.50 & 0.002 & 0.069 & 0.017 & 0.255 & 14915 \\
+LU.A.8 & 574.47 & 0.003 & 0.067 & 0.016 & 0.192 & 8655 \\
+LU.B.2 & 9712.87 & 0.002 & 0.357 & 0.104 & 1.734 & 101975 \\
+LU.B.4 & 4757.80 & 0.003 & 0.190 & 0.056 & 0.808 & 53522 \\
+LU.B.8 & 2444.05 & 0.004 & 0.222 & 0.057 & 0.548 & 30134 \\
+EP.A.2 & 123.81 & 0.002 & 0.010 & 0.003 & 0.074 & 1834 \\
+EP.A.4 & 61.92 & 0.003 & 0.011 & 0.004 & 0.073 & 1743 \\
+EP.A.8 & 31.06 & 0.004 & 0.017 & 0.005 & 0.073 & 1661 \\
+EP.B.2 & 495.49 & 0.001 & 0.009 & 0.003 & 0.196 & 2011 \\
+EP.B.4 & 247.69 & 0.002 & 0.012 & 0.004 & 0.122 & 1663 \\
+EP.B.8 & 126.74 & 0.003 & 0.017 & 0.005 & 0.083 & 1656 \\
+\bottomrule[1.5pt]
+\end{longtable}
+
+\section{插图}
+通过使用扩展宏包，基本可以插入各种格式的图片，不仅仅限制于\texttt{eps}格式的矢量图。 在图~\ref{fig:scu-logo} 与图~\ref{fig:scu-hanji} 中演示了如何处理并列的图形。
+
+\begin{figure}[htb]
+	\centering
+	\begin{minipage}{.35\textwidth}
+	  \centering
+	  \includegraphics[height=3cm]{images/logo}
+	  \caption{四川大学Logo} \label{fig:scu-logo}
+	\end{minipage}
+	\begin{minipage}{.55\textwidth}
+	  \centering
+		\vskip1cm
+	  \includegraphics[height=2cm]{images/scu}
+	  \caption{四川大学字样} \label{fig:scu-hanji}
+	\end{minipage}
+\end{figure}
+
+\section{绘图}
+除了使用第三方工具绘图之后再在\LaTeX{}中插入的方法以外，在\LaTeX{}中也有很多大牛制作的绘图工具，如：PGF和PSTricks。但是绘图部分内容较多，在这里不过多赘述，在图~\ref{fig:tikz-example}给出一个简单的例子。
+
+  \begin{figure}[htb]
+	  \centering
+	  \begin{tikzpicture}[sibling distance=80pt]
+		  \node[box] {\TeX{}}
+		    child {node[box] {Plain\TeX{}}}
+			  child {node[box] {\LaTeX{}}
+			    child {node[box] {amsmath}}
+				  child {node[box] {graphicx}}
+				  child {node[box] {hyperref}}
+			  };
+	  \end{tikzpicture}
+	  \caption{TikZ示例} \label{fig:tikz-example}
+  \end{figure}
+
+\section{参考文献}
+\scuthesis{}参考文献符合国家GB/T7714-2005标准\citep{2005_wen_2005}。
+
+对于引用的文献本文使用的样式是 \texttt{\textbackslash{}citep\{cite\_key\}}。
+大概样式为\citep{2005_wen_2005,knuth_texbook_1986,latexnotes203}
+
+\subsection{参考文献的使用}
+\scuthesis{}采用BibTeX来管理文献，根据个人的喜好可以选择直接使用文本编辑器或专用的管理软件，如BibDesk等。
+
+文献的来源主要是Google
+Scholar或百度学术，在引用过程中直接选择BibTeX格式，然后将内容贴入参考文献\texttt{refs.bib}中，对于中文的参考文献条目需要手动添加\texttt{language=zh}。
+
+\lstinputlisting[language=tex, style=framed, label={refsbib}, firstnumber=96, firstline=96, lastline=105,
+linebackgroundcolor={\ifnum\value{lstnumber}=104\color{yellow}\fi}]{refs.bib}
