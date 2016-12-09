@@ -16,7 +16,7 @@
 % This work consists of the files scuthesis.cls and scuthesis.cfg.
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{scuthesis}[2016/06/18 v0.6.2 scuthesis document class]
+\ProvidesClass{scuthesis}[2016/12/09 v1.0 scuthesis document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -48,7 +48,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \def\scuthesis{\textsc{ScuThesis}}
-\def\version{0.6.2}
+\def\version{1.0}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 % 表格
 \RequirePackage{array}
@@ -74,7 +74,7 @@
 \RequirePackage{hypernat}
 
 \RequirePackage{geometry}
-\geometry{$%
+\geometry{%
   a4paper,
   top=2.5cm,
   bottom=2.5cm,
