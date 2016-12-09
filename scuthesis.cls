@@ -305,7 +305,7 @@
   {\addtolength\leftskip{1.7cm}
   \addtolength\rightskip{.9cm}
   {\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}摘要{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract}\vskip1.3cm
-  {\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}主题词{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
+  {\bf\kaishu\zihao{5}{\fontspec{KaiTi} [}关键词{\fontspec{KaiTi} ]}}\hskip.2cm{\kaishu\zihao{5}\scu@cabstract@key}
   \clearpage}
   % English Abstract
   \thispagestyle{abstract}
