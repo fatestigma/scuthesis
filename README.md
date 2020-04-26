@@ -13,8 +13,11 @@ ScuThsis 是一个**非官方**的四川大学本科生毕业设计论文模板�
 
 README文件夹下为帮助文档的源码，可以作为一个参考看看。
 
+### 封面中文标题过长溢出如何换行？
+在需要换行的地方加上一个空格即可，如果标题超过三行，可能会把封面日期挤到下一页，可能需要手动修改 `scuthesis.cls` 245-249 行的行距。
+
+
 ## License
 The content of this project itself is licensed under the [LaTeX Project Public License 1.3c][lppl] license.
 
 [lppl]: http://latex-project.org/lppl/
-
